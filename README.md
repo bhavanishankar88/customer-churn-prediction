@@ -1,45 +1,30 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
-import joblib
-import os
+# 📞 Customer Churn Prediction - Machine Learning Web App
 
-# Load full dataset
-df = pd.read_csv('data/customer_churn.csv')
+A Machine Learning application that predicts whether a customer will leave the company (Churn) or stay.
 
-print("Data Loaded!")
-print("Shape:", df.shape)
-print("Churn Rate:", round(df['churn'].mean()*100, 2), "%\n")
+## ✨ Features
+- Predicts customer churn in real-time
+- User-friendly web interface using Streamlit
+- Trained using Logistic Regression
+- Business-focused project
 
-# Features and Target
-X = df.drop('churn', axis=1)
-y = df['churn']
+## 🛠 Technologies Used
+- **Python**
+- **Scikit-learn**
+- **Streamlit**
+- **Pandas & NumPy**
+- **Joblib**
 
-# Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+## 📊 Model Details
+- **Problem Type**: Binary Classification
+- **Algorithm**: Logistic Regression
+- **Dataset**: Synthetic customer data (1000 samples)
+- **Target**: Churn (1 = Yes, 0 = No)
 
-# Train model with better settings
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
+## 🚀 How to Run Locally
 
-# Save model
-os.makedirs('models', exist_ok=True)
-joblib.dump(model, 'models/churn_model.pkl')
-
-# Evaluate
-y_pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
-
-print("✅ Model Training Completed!")
-print(f"Accuracy: {accuracy*100:.2f}%")
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-# Feature Importance
-coefficients = model.coef_[0]
-features = X.columns
-
-print("\nFeature Importance:")
-for feature, coef in zip(features, coefficients):
-    print(f"{feature}: {coef:.4f}")
+```bash
+git clone https://github.com/bhavanishankar88/customer-churn-prediction.git
+cd customer-churn-prediction
+pip install -r requirements.txt
+streamlit run streamlit_app.py
